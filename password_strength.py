@@ -11,6 +11,7 @@ prohibition of passwords that match the format of calendar dates, license plate 
 '''
 
 import re
+import sys
 
 
 def get_password_strength(password):
@@ -57,4 +58,4 @@ def get_password_strength(password):
 
 
 if __name__ == '__main__':
-    print(get_password_strength('Moonspell111000#'))
+    print(get_password_strength(sys.argv[1]))
