@@ -2,16 +2,19 @@ import re
 import sys
 import getpass
 
+
 def get_password_balcklist(file_name):
     with open(file_name, 'r', encoding='utf-8') as raw_file:
-        return(raw_file.read())
+        return raw_file.read()
 
-def is_password_in_blacklist(password_blacklist,password):
+
+def is_password_in_blacklist(password_blacklist, password):
     for prohibited_word in password_blacklist:
         if re.search(prohibited_word, password):
             return True
         else:
             return False
+
 
 def get_password_strength(password, password_blacklist):
     password_strength = 0
@@ -21,7 +24,8 @@ def get_password_strength(password, password_blacklist):
             password_strength += 2
     if not (password.isupper() | password.islower()):
         password_strength += 2
-    if not is_password_in_blacklist(password_blacklist,password): password_strength += 2
+    if not is_password_in_blacklist(password_blacklist,password):
+        password_strength += 2
 
     return password_strength
 
