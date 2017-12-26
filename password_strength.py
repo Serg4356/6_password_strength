@@ -22,7 +22,8 @@ def has_symbols(word):
         return True
 
 
-def is_min_length(word, min_length):
+def is_min_length(word):
+    min_length = 10
     if len(word) >= min_length:
         return True
 
@@ -54,30 +55,17 @@ def is_not_empty(word):
 
 def get_password_strength(password, password_blacklist_file_name):
     password_strength = 0
-    if is_not_empty(password):
-        password_strength += 1
-    if is_min_length(password, 10):
-        password_strength += 1
-    if is_not_date(password):
-        password_strength += 1
-    else:
-        return 0
-    if is_not_phone_number(password):
-        password_strength += 1
-    else:
-        return 0
-    if has_lowercase(password):
-        password_strength += 1
-    if has_uppercase(password):
-        password_strength += 1
-    if has_numbers(password):
-        password_strength += 1
-    if has_symbols(password):
-        password_strength += 1
-    if is_word_in_blacklist(load_file(password_blacklist_file_name), password):
-        password_strength += 1
-    else:
-        return 0
+    check_list = [
+        is_not_empty, is_not_phone_number,
+        is_not_date, has_lowercase,
+        has_uppercase, is_min_length,
+        has_symbols, has_numbers
+    ]
+    for demand in check_list:
+        if demand(password):
+            password_strength += 1
+    if is_word_in_blacklist(load_file(password_blacklist_file_name),password):
+        password_strength = 0
     return password_strength
 
 
