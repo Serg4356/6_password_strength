@@ -8,7 +8,7 @@ This programm checks the password by list of demands, such as:
 4. prohibition of words found in a password blacklist
 5. prohibition of passwords that match the format of calendar dates and telephone numbers.
 
-And also returns a grade of password from 1 to 10, where 10 is the most secure. In case when prohibition rule (№4) was violated programm returns: 
+And also returns a grade of password from 0 to 10, where 10 is the most secure and 0 - password is prohibited.
 
 ``` bash
 

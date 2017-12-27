@@ -7,65 +7,61 @@ def load_file(file_name):
         return raw_file.read()
 
 
-def is_word_in_blacklist(blacklist, word):
-    if word.lower() in blacklist:
+def is_word_in_blacklist(blacklist, password):
+    if password.lower() in blacklist:
         return True
 
 
-def has_numbers(word):
-    if re.search(r'\d', word):
-        return True
+def has_numbers(password):
+    return bool(re.search(r'\d', password))
 
 
-def has_symbols(word):
-    if re.search(r'\W', word):
-        return True
+def has_symbols(password):
+    return bool(re.search(r'\W', password))
 
 
-def is_min_length(word):
+def is_min_length(password):
     min_length = 10
-    if len(word) >= min_length:
-        return True
+    return len(password) >= min_length
 
 
-def has_uppercase(word):
-    if re.search(r'[A-Z]', word):
-        return True
+def has_uppercase(password):
+    return bool(re.search(r'[A-Z]', password))
 
 
-def has_lowercase(word):
-    if re.search(r'[a-z]', word):
-        return True
+def has_lowercase(password):
+    return bool(re.search(r'[a-z]', password))
 
 
-def is_not_date(word):
-    if not re.search(r'\d{2,4}[.-]\d{2}[.-]\d{2,4}(?#searches for date in the string)', word):
-        return True
+def is_not_date(password):
+    return bool(re.search(r'\d{2,4}[.-]\d{2}[.-]\d{2,4}', password))
 
 
 def is_not_phone_number(word):
-    if not re.search(r'[7-8]\d{10}', word):
-        return True
+    return not bool(re.search(r'[7-8]\d{10}', word))
 
 
 def is_not_empty(word):
-    if word != '':
-        return True
+    return not word == ''
 
 
 def get_password_strength(password, password_blacklist_file_name):
     password_strength = 0
     check_list = [
-        is_not_empty, is_not_phone_number,
-        is_not_date, has_lowercase,
-        has_uppercase, is_min_length,
-        has_symbols, has_numbers
+        is_not_empty,
+        is_not_phone_number,
+        is_not_date,
+        has_lowercase,
+        has_uppercase,
+        is_min_length,
+        has_symbols,
+        has_numbers
     ]
+    if is_word_in_blacklist(load_file(password_blacklist_file_name),password):
+        return password_strength
     for demand in check_list:
         if demand(password):
             password_strength += 1
-    if is_word_in_blacklist(load_file(password_blacklist_file_name),password):
-        password_strength = 0
     return password_strength
 
 
