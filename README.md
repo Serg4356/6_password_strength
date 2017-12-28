@@ -8,7 +8,7 @@ This programm checks the password by list of demands, such as:
 4. prohibition of words found in a password blacklist
 5. prohibition of passwords that match the format of calendar dates and telephone numbers.
 
-And also returns a grade of password from 0 to 10, where 10 is the most secure and 0 - password is prohibited.
+And also returns a grade of password from 0 to 10, where 10 is the most secure and 0 - password is prohibited. File 'password_balcklist.txt' contains prohibited passwords. You can add words, which you consider to be prohibited, in it. Also you can find more unrecommended passwords [here](https://github.com/danielmiessler/SecLists/tree/master/Passwords).
 
 ``` bash
 
@@ -33,7 +33,6 @@ After that programm asks the user to enter password. Example of programm output:
 Password:
 # password input is shielded so there is no letter appeares
 Password strength is: 0
-
 
 ```
 

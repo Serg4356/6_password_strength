@@ -7,9 +7,8 @@ def load_file(file_name):
         return raw_file.read()
 
 
-def is_word_in_blacklist(blacklist, password):
-    if password.lower() in blacklist:
-        return True
+def is_password_in_blacklist(blacklist, password):
+    return password.lower() in blacklist
 
 
 def has_numbers(password):
@@ -42,7 +41,7 @@ def is_not_phone_number(word):
 
 
 def is_not_empty(word):
-    return not word == ''
+    return bool(word)
 
 
 def get_password_strength(password, password_blacklist_file_name):
@@ -57,7 +56,7 @@ def get_password_strength(password, password_blacklist_file_name):
         has_symbols,
         has_numbers
     ]
-    if is_word_in_blacklist(load_file(password_blacklist_file_name),password):
+    if is_password_in_blacklist(load_file(password_blacklist_file_name),password):
         return password_strength
     for demand in check_list:
         if demand(password):
