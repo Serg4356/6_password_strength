@@ -2,7 +2,7 @@ import re
 import getpass
 
 
-def load_file(file_name):
+def load_password_blacklist(file_name):
     with open(file_name, 'r', encoding='utf-8') as raw_file:
         return raw_file.read().split('\n')
 
@@ -64,7 +64,7 @@ def get_password_strength(password):
 
 if __name__ == '__main__':
     password = getpass.getpass()
-    password_blacklist = load_file('password_blacklist.txt')
+    password_blacklist = load_password_blacklist('password_blacklist.txt')
     if is_password_in_blacklist(password_blacklist,password):
         print('Password is prohibited, try again')
     else:
