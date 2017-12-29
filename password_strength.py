@@ -4,7 +4,7 @@ import getpass
 
 def load_file(file_name):
     with open(file_name, 'r', encoding='utf-8') as raw_file:
-        return raw_file.read()
+        return raw_file.read().split('\n')
 
 
 def is_password_in_blacklist(blacklist, password):
@@ -44,7 +44,7 @@ def is_not_empty(word):
     return bool(word)
 
 
-def get_password_strength(password, password_blacklist_file_name):
+def get_password_strength(password):
     password_strength = 0
     check_list = [
         is_not_empty,
@@ -56,8 +56,6 @@ def get_password_strength(password, password_blacklist_file_name):
         has_symbols,
         has_numbers
     ]
-    if is_password_in_blacklist(load_file(password_blacklist_file_name),password):
-        return password_strength
     for demand in check_list:
         if demand(password):
             password_strength += 1
@@ -66,4 +64,8 @@ def get_password_strength(password, password_blacklist_file_name):
 
 if __name__ == '__main__':
     password = getpass.getpass()
-    print('Password strength is: ', get_password_strength(password, 'password_blacklist.txt'))
+    password_blacklist = load_file('password_blacklist.txt')
+    if is_password_in_blacklist(password_blacklist,password):
+        print('Password is prohibited, try again')
+    else:
+        print('Password strength is: ', get_password_strength(password))
